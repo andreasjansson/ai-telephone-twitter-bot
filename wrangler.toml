@@ -1,0 +1,9 @@
+name = "telephone-ai-twitter-bot"
+
+main = "index.js"
+workers_dev = true
+compatibility_date = "2022-07-26"
+node_compat = true
+
+[triggers]
+crons = ["0 * * * *"]
