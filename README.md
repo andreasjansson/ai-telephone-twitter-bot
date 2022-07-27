@@ -2,4 +2,4 @@
 
 🤖 [@TelephoneAI](https://twitter.com/TelephoneAI)
 
-<center><img width="200px" src="logo.png" /></center>
+<div align="center"><img width="250px" src="logo.png" /></div>
