@@ -23,7 +23,9 @@ With ai-telephone as an example project, this tutorial describes how to build a 
 - [Step 9: Install project dependencies](#step-9-install-project-dependencies)
 - [Step 10: Run the ai-telephone bot locally](#step-10-run-the-ai-telephone-bot-locally)
 - [Step 11: Modify the code](#step-11-modify-the-code)
-- [Step 12: Publish your worker](#step-12-publish-your-worker)
+- [Step 12: Make a new service on Cloudflare Workers](#step-12-make-a-new-service-on-cloudflare-workers)
+- [Step 13: Copy the API keys to Cloudflare Worker's environment variables](#step-13-copy-the-api-keys-to-cloudflare-workers-environment-variables)
+- [Step 14: Publish your worker](#step-14-publish-your-worker)
 
 ### Step 1: Fork this repository and clone it
 
@@ -167,9 +169,23 @@ Test your code locally by again running `wrangler dev --local` and visiting http
 > **Note**
 > If you get stuck or need help with anything, come chat with us in https://discord.gg/replicate.
 
-### Step 12: Publish your worker
+### Step 12: Make a new service on Cloudflare Workers
 
-If your bot does something other than play telephone with itself, you might want to update the `name` field in `wrangler.toml`. If you want to run it on a different schedule than every 20 minutes, you can change the `crons` field as well.
+Go to https://workers.cloudflare.com and hit _Create a Service_. Give it a name and remember it for Step 14.
+
+![make a new service](assets/make-worker.png)
+
+It doesn't matter if you make it a "HTTP handler" or "HTTP router" since we'll overwrite their generated code with ours anyway.
+
+### Step 13: Copy the API keys to Cloudflare Worker's environment variables
+
+Click through to your new worker, and go to _Settings_ -> _Variables_. Hit "Edit variables" and add all the variables from `.dev.vars` as environment variables. Make sure to hit the "Encrypt" button on all of them.
+
+![make a new service](assets/worker-env-vars.png)
+
+### Step 14: Publish your worker
+
+Update the `name` field in `wrangler.toml` to match the name you gave your worker in Step 12. If you want to run it on a different schedule than every 20 minutes, you can change the `crons` field as well.
 
 When you're ready to publish your worker, run
 
