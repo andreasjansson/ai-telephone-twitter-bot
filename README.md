@@ -10,6 +10,21 @@ _Two robots playing a game of telephone. One that generates images from captions
 
 With ai-telephone as an example project, this tutorial describes how to build a Replicate Twitter bot in JavaScript and deploy it as a scheduled job on CloudFlare Workers. Feel free to copy and paste code from here into your own project!
 
+**Table of Contents**
+
+- [Step 1: Fork this repository and clone it](#step-1-fork-this-repository-and-clone-it)
+- [Step 2: Make a new Twitter account for your bot](#step-2-make-a-new-twitter-account-for-your-bot)
+- [Step 3: Create a developer account](#step-3-create-a-developer-account)
+- [Step 4: Get your Replicate API token](#step-4-get-your-replicate-api-token)
+- [Step 5: Make Twitter tokens](#step-5-make-twitter-tokens)
+- [Step 6: Make a Cloudflare account](#step-6-make-a-cloudflare-account)
+- [Step 7: Install Node.js and npm](#step-7-install-nodejs-and-npm)
+- [Step 8: Install wrangler](#step-8-install-wrangler)
+- [Step 9: Install project dependencies](#step-9-install-project-dependencies)
+- [Step 10: Run the ai-telephone bot locally](#step-10-run-the-ai-telephone-bot-locally)
+- [Step 11: Modify the code](#step-11-modify-the-code)
+- [Step 12: Publish your worker](#step-12-publish-your-worker)
+
 ### Step 1: Fork this repository and clone it
 
 Make your own fork of https://github.com/andreasjansson/ai-telephone-twitter-bot and clone it to your local computer.
@@ -145,7 +160,7 @@ If you want to add external libraries, check the [list of supported packages](ht
 npm install <package-name>
 ```
 
-What should your bot do? The limit is your imagination! ...and [Cloudflare Worker's resource limits](https://developers.cloudflare.com/workers/platform/limits/). Notably, triggered workers have a [CPU time limit](https://developers.cloudflare.com/workers/platform/limits/#cpu-runtime) of 30 seconds if it's run more frequently than hourly. If it's run less frequently it can use 15 minutes of CPU time. You can add up to three triggers, so you can run long-running jobs every 20 minutes by spreading them out. Note however that CPU time is not wall time, but the docs say that workers have a [higher chance of eviction](https://developers.cloudflare.com/workers/platform/limits/#unbound-usage-model) after 30 seconds.
+💡 What should your bot do? The limit is your imagination! ...and [Cloudflare Worker's resource limits](https://developers.cloudflare.com/workers/platform/limits/). Notably, triggered workers have a [CPU time limit](https://developers.cloudflare.com/workers/platform/limits/#cpu-runtime) of 30 seconds if it's run more frequently than hourly. If it's run less frequently it can use 15 minutes of CPU time. You can add up to three triggers, so you can run long-running jobs every 20 minutes by spreading them out. Note however that CPU time is not wall time, but the docs say that workers have a [higher chance of eviction](https://developers.cloudflare.com/workers/platform/limits/#unbound-usage-model) after 30 seconds.
 
 Test your code locally by again running `wrangler dev --local` and visiting http://localhost:8787.
 
