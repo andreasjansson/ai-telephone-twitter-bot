@@ -195,11 +195,11 @@ wrangler publish
 
 If you don't want people to be able to trigger your worker and tweeting things outside of the schedule, you have to manually uncheck the main route for your worker on the _Triggers_ tab on your worker's page on https://workers.cloudflare.com.
 
-[worker routes](assets/worker-routes.png)
+![worker routes](assets/worker-routes.png)
 
 You can check the logs of your scheduled runs by going to the _Logs_ tab and viewing _Past Cron Events_.
 
-[logs](assets/logs.png)
+![logs](assets/logs.png)
 
 ---
 
