@@ -193,7 +193,7 @@ When you're ready to publish your worker, run
 wrangler publish
 ```
 
-If you don't want people to be able to trigger your worker and tweeting things outside of the schedule, you have to manually uncheck the main route for your worker on the _Triggers_ tab on your worker's page on https://workers.cloudflare.com.
+If you don't want people to be able to trigger your worker and tweeting things outside of the schedule, you have to manually disable the main route for your worker on the _Triggers_ tab on your worker's page on https://workers.cloudflare.com.
 
 ![worker routes](assets/worker-routes.png)
 
