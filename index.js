@@ -67,15 +67,16 @@ async function nextTweet() {
  * The upscaled image URL is returned.
  */
 async function generateImage(text) {
-  const minDalle = await replicate.models.get("kuprel/min-dalle");
-  const swinIR = await replicate.models.get("jingyunliang/swinir");
-  console.log("Generating image with min-dalle");
-  const minDalleOutput = await minDalle.predict({ text: text, grid_size: 1 });
-  const image = minDalleOutput.pop();
-  console.log("Upscaling image with swin-ir");
-  const swinIROutput = await swinIR.predict({ image: image });
-  const upscaled = swinIROutput.pop();
-  return upscaled["file"];
+  const stableDiffusion = await replicate.models.get("stability-ai/stable-diffusion");
+  console.log("Generating image");
+  const stableDiffusionOutput = await stableDiffusion.predict({
+    prompt: text,
+    width: 512,
+    height: 512,
+    num_inference_steps: 50,
+    num_outputs: 1
+  });
+  return stableDiffusionOutput[0];
 }
 
 /**
@@ -84,10 +85,10 @@ async function generateImage(text) {
  * The image is captioned with https://replicate.com/j-min/clip-caption-reward
  */
 async function captionImage(imageURL) {
-  const clipCaptionReward = await replicate.models.get("j-min/clip-caption-reward");
-  console.log("Captioning image with clip-caption-reward");
-  const captionOutput = await clipCaptionReward.predict({ image: imageURL });
-  return captionOutput;
+  const img2prompt = await replicate.models.get("methexis-inc/img2prompt");
+  console.log("Captioning image");
+  const img2promptOutput = await img2prompt.predict({ image: imageURL });
+  return img2promptOutput;
 }
 
 /**
@@ -150,12 +151,18 @@ async function getMyUserID() {
  * Tweet a string of text, optionally quote tweeting a previous tweet.
  */
 async function tweetText(text, quoteTweetID) {
+  text = text.trim();
+  if (text.length > 280) {
+    text = text.substring(0, 280);
+    text = text.substring(0, text.lastIndexOf(","));
+  }
+  console.log(`Tweeting ${text}`);
   const url = "https://api.twitter.com/2/tweets";
   const body = { text: text };
   if (quoteTweetID) {
     body.quote_tweet_id = quoteTweetID;
   }
-  await fetch(url, {
+  const resp = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -163,7 +170,12 @@ async function tweetText(text, quoteTweetID) {
     },
     body: JSON.stringify(body)
   });
+  if (resp.status != 200) {
+    const body = await resp.text();
+    console.log(body);
+  }
 }
+
 
 /**
  * Tweet an image, optionally quote tweeting a previous tweet.
